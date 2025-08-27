@@ -1,0 +1,196 @@
+# ====================
+# Visual Studio
+# ====================
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.suo
+*.user
+*.vspscc
+*.vssscc
+.vs/
+
+# Visual Studio 2015-2019 cache/options
+.vs/
+*.cache
+
+# Visual Studio 2017 auto generated files
+[Dd]ebug*/
+[Rr]elease*/
+x64*/
+[Bb]in/**
+[Oo]bj/**
+[Mm]odule*/
+
+# Visual Studio 2019+ cache
+[Dd]ebug*/
+[Rr]elease*/
+*.csproj.nuget.g.props
+*.csproj.nuget.g.targets
+
+# Visual Studio 2022 cache
+*.vs/
+*.vscode/
+
+# ====================
+# .NET Core
+# ====================
+
+*.dll
+*.exe
+*.pdb
+*.xml
+bin/
+obj/
+*.user
+*.suo
+*.lock.json
+*.csproj.nuget.g.props
+*.csproj.nuget.g.targets
+
+# ====================
+# NuGet Packages
+# ====================
+
+packages/
+nuget.exe
+nuget.targets
+*.nupkg
+
+# NuGet packages directory (if using a custom path)
+.nuget/
+
+# ====================
+# Angular Specific
+# ====================
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# Build output
+dist/
+prod/
+build/
+
+# Environment files
+.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Angular CLI cache
+.angular/
+
+# ====================
+# IDE/Editor Specific
+# ====================
+
+# Visual Studio Code
+.vscode/
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+
+# JetBrains Rider
+.idea/
+*.iml
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+*~
+.Trashes
+._*
+.Spotlight-V100
+.docviewer
+.fseventsd
+.ds_store
+
+# ====================
+# Temporary Files
+# ====================
+
+*.tmp
+*.temp
+Thumbs.db
+*.bak
+*.old
+*.orig
+
+# ====================
+# Logs and Database
+# ====================
+
+*.log
+*.sql
+*.dump
+
+# ====================
+# OS Generated Files
+# ====================
+
+~*
+*~
+*.swp
+._*
+
+# ====================
+# Visual Studio Code
+# ====================
+
+.vscode/
+
+# ====================
+# IDE/Editor Specific
+# ====================
+
+# JetBrains Rider
+.idea/
+*.iml
+
+# Visual Studio 2017+ cache
+[Tt]est[Rr]esults/
+[Dd]ebug*/
+[Rr]elease*/
+x64*/
+[Bb]in/**
+[Oo]bj/**
+[Mm]odule*/
+
+# ====================
+# Angular CLI
+# ====================
+
+# Build artifacts
+dist/
+
+# Node modules (if using a different directory structure)
+node_modules/
+
+# Environment files (specific to Angular app)
+.env.*
+
+# ====================
+# Additional
+# ====================
+
+# Local configuration files
+local.config
+config.local.json
+*.local.config
