@@ -1,0 +1,6 @@
+@YARP_Api_HostAddress = http://localhost:5286
+
+GET {{YARP_Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -27,3 +27,10 @@ Yarp.ReverseProxy
 8. There are JWT event subscripted to in the reverse proxy you can inspect the events.
 9. Rerverse proxy validates the JWT then forwards and the API app also validates again because its configured to do so.
     10. you could let the reverse proxy do all the auth and have nothing on the api app
+
+
+### Todo add web api and web app setup
+* how to configure api auth (notes on double validation, api) 
+* how to configure cors (api)
+* how to configure protected map (web)
+* what the api service should call (web)
