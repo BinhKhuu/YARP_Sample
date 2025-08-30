@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+    build-proxy-and-api:
+      runs-on: ubuntu-latest
+      steps:
+
+        - uses:  actions/checkout@v4
+
+        - name: Setup .NET SDK
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: '8.0.411'
+
+        - name: DotNET Publish reverse proxy
+          run: dotnet publish ./YARP_ReverseProxy/YARP_ReverseProxy.csproj --configuration Release -o ./publish/reverse-proxy
+          
+        - name: DotNET Publish api
+          run: dotnet publish ./YARP_Api/YARP_Api.csproj --configuration Release -o ./publish/api
+          
+        - name: Upload Reverse Proxy Artifact
+          if: github.event_name == 'pull_request'
+          uses: actions/upload-artifact@v4
+          with:
+            name: reverse-proxy-build
+            path: ./publish/reverse-proxy/
+
+        - name: Upload API Artifact
+          if: github.event_name == 'pull_request'
+          uses: actions/upload-artifact@v4
+          with:
+            name: api-build
+            path: ./publish/api/
+            
+    build-client:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '24'
+            cache: 'npm'
+            cache-dependency-path: ./YARP_Client/yarp-app/package-lock.json
+
+        - name: Install Angular CLI
+          run: npm install -g @angular/cli
+
+        - name: Run NPM install
+          working-directory: ./YARP_Client/yarp-app
+          run: npm install
+
+        - name: Build Angular Application
+          working-directory: ./YARP_Client/yarp-app
+          run: ng build
+
+        - name: Upload Angular App
+          if: github.event_name == 'pull_request'
+          uses: actions/upload-artifact@v4
+          with:
+            name: WebApp
+            path: ./YARP_Client/yarp-app/dist/
