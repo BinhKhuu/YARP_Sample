@@ -1,0 +1,48 @@
+version: '1.0'
+
+services:
+  yarp-api:
+    build:
+      context: .
+      dockerfile: YARP_Api/Dockerfile
+      args:
+        BUILD_CONFIGURATION: ${BUILD_CONFIGURATION}
+        ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+    ports:
+      - "5231:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+    develop:
+      watch:
+        - action: rebuild
+          path: ./YARP_Api
+          target: /src/YARP_Api
+  yarp-reverseproxy:
+    build:
+      context: .
+      dockerfile: YARP_ReverseProxy/Dockerfile
+      args:
+        BUILD_CONFIGURATION: ${BUILD_CONFIGURATION}
+        ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+    ports:
+      - "7141:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+    develop:
+      watch:
+        - action: rebuild
+          path: ./YARP_ReverseProxy
+          target: /src/YARP_ReverseProxy
+          
+  yarp-client:
+    build:
+      context: ./YARP_Client/yarp-app
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    develop:
+      watch:
+        - action: rebuild
+          path: ./YARP_Client
+          target: /app
+    
