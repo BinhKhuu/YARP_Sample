@@ -27,7 +27,7 @@ public class Program
         {
             options.AddPolicy("AllowAngularApp", policy =>
             {
-                policy.WithOrigins("https://localhost:7141") // Your Angular app URL
+                policy.WithOrigins("http://localhost:7141","http://localhost:5044") // Your Angular app URL
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials(); // If you need to send credentials

@@ -14,6 +14,6 @@ public class AppConfigurator
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
     }
 }
