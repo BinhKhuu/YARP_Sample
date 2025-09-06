@@ -83,6 +83,11 @@ jobs:
           with:
             node-version: '24'
 
+        - name: Start Services with Docker Compose
+          run: |
+            docker compose -f ./docker-compose.yml up -d
+            sleep 10  # wait for services to stabilize
+            
 #        - name: Download Reverse Proxy Artifact
 #          uses: actions/download-artifact@v4
 #          with:
@@ -115,11 +120,6 @@ jobs:
         - name: Install Playwright Browsers
           run: ~/.dotnet/tools/playwright install --with-deps
 
-
-        - name: Start Services with Docker Compose
-          run: |
-            docker compose -f ./docker-compose.yml up -d
-            sleep 10  # wait for services to stabilize
 
 #        - name: Install Playwright CLI
 #          run: dotnet tool install --global Microsoft.Playwright.CLI
