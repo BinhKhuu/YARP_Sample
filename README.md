@@ -1,7 +1,30 @@
-# Start up
+# Local debug
 1. Start YARP_ReverseProxy (.NET)
 2. Start YARP_Api project (.NET)
 3. ```ng serve``` YARP_Client (angular)
+4. Call YARP_ReverseProxy localhost:5044/web to load Client app
+7. Call Yarp_ReverseProxy loclahost:5286/api to get to YARP_Api
+   8. configured to validate bearer tokens**
+
+# Docker debug
+1. YARP_ReverseProxy Port mapping 5044:80 (localalhost 5044 to docker service 80)
+2. YARP_API exposes Port mapping 5286:80 (localalhost 5286 to docker service 80)
+3. YARP_Client Port mapping 4200:4200 (localalhost 4200 to docker service 4200)
+   4. Client API request are mapped to YARP_ReverseProxy (5044) using your local machines localhost it doesn't need the service name
+      5. service names are required for docker service to docker service communication
+   5. YARP_ReverseProxy forwards request to 5286 (YARP_Api docker service) via the service name yarpapi:5286
+6. Call YARP_ReverseProxy localhost:5044/web to load Client app
+7. Call Yarp_ReverseProxy loclahost:5286/api to get to YARP_Api
+   8. configured to validate bearer tokens
+
+
+```
+BUILD_CONFIGURATION=Development ASPNETCORE_ENVIRONMENT=Development docker compose up
+```
+
+```
+BUILD_CONFIGURATION=Development ASPNETCORE_ENVIRONMENT=Development docker compose up --watch
+```
 
 # YARP_ReverseProxy
 ### packages
@@ -16,6 +39,27 @@ Yarp.ReverseProxy
 2. /api to Web Api (localhost:5231)
     3. protected via jwt configuration (MicrosoftIdentityWebApi)
 4. / on the reverse proxy is unprotected, just displays a button that tries to call /api
+
+Depnding on your debug choice (docker or localhost) update the cluster addresses
+* use docker service name in docker compose : HostPort or call localhost directly if not using docker
+```json
+"Clusters": {
+      "api": {
+        "Destinations": {
+          "destination1": {
+            "Address": "http://yarpapi:8080"
+          }
+        }
+      },
+      "web": {
+        "Destinations": {
+          "destination1": {
+            "Address": "http://yarpclient:4200"
+          }
+        }
+      }
+    }
+```
 
 ### Notes
 1. Rerverse Proxy returns 401 to ALL request to /api (because of the catch all)
@@ -35,9 +79,30 @@ Yarp.ReverseProxy
 2. Set Authentication and authorisation police
    3. Validating twice onece on reverse proxy then again on api
 
+Update Cors settings to allow host addresses based on Docker service names or localhosts depending on your debug choice
+```csharp
+builder.Services.AddCors(options =>
+{
+   options.AddPolicy("AllowAngularApp", policy =>
+   {
+       policy.WithOrigins("https://localhost:7141","http://localhost:5044") // Your Angular app URL
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials(); // If you need to send credentials
+   });
+});
+```
+
 # Web (client) Configuration
 1. Set MSAL to retrieve token from same registraion API is configured to validate against
 2. Set MSAL Intercetor config to watch reverse proxy domain (7141)
+
+Depending on if you are debuging locally or using docker set the baseURL in the Api service to call the reverse proxy
+* api requests are executed in the browser so you don't need to use the docker service name
+```js
+export class ApiService {
+  private baseURL: string = "http://localhost:5044/api"
+```
 
 
 # App Registration Configuration
