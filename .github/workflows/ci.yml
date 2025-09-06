@@ -109,8 +109,12 @@ jobs:
 #            dotnet tool install --global Microsoft.Playwright.CLI
 #            echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
-        - name: Ensure browsers are installed
-          run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        - name: Install Playwright CLI
+          run: dotnet tool install --global Microsoft.Playwright.CLI
+                 
+        - name: Install Playwright Browsers
+          run: ~/.dotnet/tools/playwright install --with-deps
+
 
         - name: Start Services with Docker Compose
           run: |
@@ -121,11 +125,10 @@ jobs:
 #          run: dotnet tool install --global Microsoft.Playwright.CLI
 
         - name: Run Playwright Tests
-          working-directory: ./tests
-          run: dotnet test
+          run: dotnet test ./Tests/PlaywrightTests/PlaywrightTests.csproj
 
         - name: Stop Services
           if: always()
-          run: docker compose -f ./tests/docker-compose.yml down
+          run: docker compose -f ./docker-compose.yml down
 
       
