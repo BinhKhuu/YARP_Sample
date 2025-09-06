@@ -18,6 +18,14 @@
    8. configured to validate bearer tokens
 
 
+```
+BUILD_CONFIGURATION=Development ASPNETCORE_ENVIRONMENT=Development docker compose up
+```
+
+```
+BUILD_CONFIGURATION=Development ASPNETCORE_ENVIRONMENT=Development docker compose up --watch
+```
+
 # YARP_ReverseProxy
 ### packages
 ```
