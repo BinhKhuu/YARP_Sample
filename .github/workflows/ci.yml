@@ -85,7 +85,7 @@ jobs:
 
         - name: Start Services with Docker Compose
           run: |
-            docker compose -f ./docker-compose.yml up -d
+            BUILD_CONFIGURATION=Development ASPNETCORE_ENVIRONMENT=Development docker compose -f ./docker-compose.yml up -d
             sleep 10  # wait for services to stabilize
             
 #        - name: Download Reverse Proxy Artifact
